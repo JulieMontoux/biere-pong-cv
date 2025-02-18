@@ -42,7 +42,7 @@ jobs:
       # Étape 6 : Déployer sur GitHub Pages
       - name: Deploy to GitHub Pages
         run: |
+          cd beer-pong-cv  # Assurez-vous que le répertoire est correct
           npm run deploy
-        working-directory: ./beer-pong-cv  # Cible le bon répertoire pour npm run deploy
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Utilisation du token GitHub pour le déploiement
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}   # Utilisation du token GitHub pour le déploiement
