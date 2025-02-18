@@ -1,0 +1,40 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - develop  # Déclenche le workflow sur chaque push vers la branche main
+  pull_request:
+    branches:
+      - main  # Déclenche le workflow sur chaque pull request vers la branche main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # Étape 1 : Check out le code de votre repository
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Étape 2 : Installer Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'  # ou toute autre version de Node.js que vous utilisez
+
+      # Étape 3 : Installer les dépendances
+      - name: Install dependencies
+        run: |
+          npm install
+
+      # Étape 4 : Construire le projet
+      - name: Build
+        run: |
+          npm run build
+
+      # Étape 5 : Déployer sur GitHub Pages
+      - name: Deploy to GitHub Pages
+        run: |
+          npm run deploy
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Utilisation du token GitHub pour le déploiement
