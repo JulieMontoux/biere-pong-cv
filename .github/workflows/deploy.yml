@@ -23,25 +23,37 @@ jobs:
         with:
           node-version: '14'  # ou toute autre version de Node.js que vous utilisez
 
-      # Étape 3 : Installer les dépendances
+      # Étape 3 : Se déplacer dans le répertoire 'beer-pong-cv' (dossier de l'application React)
+      - name: Change directory to beer-pong-cv
+        run: cd beer-pong-cv
+
+      # Étape 4 : Installer les dépendances
       - name: Install dependencies
         run: |
+          cd beer-pong-cv
           npm install
+          
+      # Étape 5 : Installer gh-pages
+      - name: Install gh-pages
+        run: |
+          cd beer-pong-cv
+          npm install gh-pages --save-dev
 
-      # Étape 4 : Construire le projet
+      # Étape 6 : Construire le projet dans le répertoire correct
       - name: Build
         run: |
+          cd beer-pong-cv
           npm run build
-
-      # Étape 5 : Configurer l'utilisateur Git
+          
       - name: Configure Git user
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
 
-      # Étape 6 : Déployer sur GitHub Pages
+      # Étape 7 : Déployer sur GitHub Pages
       - name: Deploy to GitHub Pages
         run: |
+          cd beer-pong-cv
           npm run deploy
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Utilisation du token GitHub pour le déploiement
