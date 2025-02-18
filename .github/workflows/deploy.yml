@@ -30,19 +30,25 @@ jobs:
       # Étape 4 : Installer les dépendances
       - name: Install dependencies
         run: |
+          cd beer-pong-cv
           npm install
-        working-directory: ./beer-pong-cv  # Cible le bon répertoire pour npm install
+          
+      # Étape 5 : Installer gh-pages
+      - name: Install gh-pages
+        run: |
+          cd beer-pong-cv
+          npm install gh-pages --save-dev  # Installation explicite de gh-pages
 
-      # Étape 5 : Construire le projet
+      # Étape 6 : Construire le projet dans le répertoire correct
       - name: Build
         run: |
+          cd beer-pong-cv
           npm run build
-        working-directory: ./beer-pong-cv  # Cible le bon répertoire pour npm run build
 
-      # Étape 6 : Déployer sur GitHub Pages
+      # Étape 7 : Déployer sur GitHub Pages
       - name: Deploy to GitHub Pages
         run: |
-          cd beer-pong-cv  # Assurez-vous que le répertoire est correct
+          cd beer-pong-cv
           npm run deploy
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}   # Utilisation du token GitHub pour le déploiement
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Utilisation du token GitHub pour le déploiement
