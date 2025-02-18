@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - develop  # Déclenche le workflow sur chaque push vers la branche main
+      - main  # Déclenche le workflow sur chaque push vers la branche main
   pull_request:
     branches:
       - main  # Déclenche le workflow sur chaque pull request vers la branche main
@@ -22,19 +22,26 @@ jobs:
         with:
           node-version: '14'  # ou toute autre version de Node.js que vous utilisez
 
-      # Étape 3 : Installer les dépendances
+      # Étape 3 : Se déplacer dans le répertoire 'beer-pong-cv' (dossier de l'application React)
+      - name: Change directory to beer-pong-cv
+        run: cd beer-pong-cv
+
+      # Étape 4 : Installer les dépendances
       - name: Install dependencies
         run: |
           npm install
+        working-directory: ./beer-pong-cv  # Cible le bon répertoire pour npm install
 
-      # Étape 4 : Construire le projet
+      # Étape 5 : Construire le projet
       - name: Build
         run: |
           npm run build
+        working-directory: ./beer-pong-cv  # Cible le bon répertoire pour npm run build
 
-      # Étape 5 : Déployer sur GitHub Pages
+      # Étape 6 : Déployer sur GitHub Pages
       - name: Deploy to GitHub Pages
         run: |
           npm run deploy
+        working-directory: ./beer-pong-cv  # Cible le bon répertoire pour npm run deploy
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Utilisation du token GitHub pour le déploiement
